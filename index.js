@@ -16,17 +16,40 @@ function getKodersFile(){
 }
 
 //creamos la ruta de koders
-server.get('/koders', (request, response) => {
+server.get('/koders', async(request, response) => {
     // Leemos los datos que tenemos en koders.json, a través de fs
-    fs.promises.readFile('koders.json', "utf8")
-        .then((data) => {
-            // Parseamos los datos para imprimirlos como json, y saber que va a recibir lo mismo con .json
-            response.json(JSON.parse(data))
-        })
-        .catch((error) => {
-            response.write('Ocurrió un error: ', error)
-            response.end()
-        })
+    // fs.promises.readFile('koders.json', "utf8")
+    //     .then((data) => {
+    //         // Parseamos los datos para imprimirlos como json, y saber que va a recibir lo mismo con .json
+    //         response.json(JSON.parse(data))
+    //     })
+    //     .catch((error) => {
+    //         response.write('Ocurrió un error: ', error)
+    //         response.end()
+    //     })
+
+    const genderFilter = request.query.gender
+    const nameFilter = request.query.name
+    const countFilter = parseInt(request.query.count)
+
+    let jsonParsed = getKodersFile()
+
+    let kodersData = null
+
+    if(genderFilter){
+        kodersData = jsonParsed.koders.filter(koder => koder.gender == genderFilter)
+    }
+    if(nameFilter){
+        const dataToFilter = kodersData || jsonParsed.koders
+        kodersData = dataToFilter.filter(koder => koder.name == nameFilter)
+    }
+    if(countFilter){
+        const dataToFilter = kodersData || jsonParsed.koders
+        kodersData = dataToFilter.splice(0,countFilter) 
+    }
+
+    jsonParsed.koders = kodersData || jsonParsed.koders
+    response.json(jsonParsed.koders)
 })
 
 // Agregaremos un koder a nuestro arreglo de koders

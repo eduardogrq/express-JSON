@@ -50,10 +50,11 @@ router.get('/', async(request, response) => {
 // Agregaremos un koder a nuestro arreglo de koders
 
 router.post('/', (request, response) => {
+    const id = request.body.id
     const name = request.body.name
     const gender = request.body.gender
 
-    const newKoder = {name, gender}
+    const newKoder = {id, name, gender}
 
     const content = fs.readFileSync('koders.json', 'utf8')
     const json = JSON.parse(content)

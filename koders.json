@@ -25,5 +25,27 @@
       "name": "América",
       "gender": "f"
     }
+  ],
+  "mentors": [
+    {
+      "id": 1,
+      "name": "Oso",
+      "module": "hello"
+    },
+    {
+      "id": 2,
+      "name": "Melisa",
+      "module": "hello"
+    },
+    {
+      "id": 3,
+      "name": "Isra",
+      "module": "maquetado"
+    },
+    {
+      "id": 4,
+      "name": "Charles",
+      "module": "Back"
+    }
   ]
 }
